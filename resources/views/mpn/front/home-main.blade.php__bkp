@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="zxx">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/bootstrap.min.css')}}">
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/owl.carousel.min.css')}}">
+        <!-- Owl Carousel Theme Default CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/owl.theme.default.min.css')}}">
+        <!-- Box Icon CSS-->
+        <link rel="stylesheet" href="{{asset('front/css/boxicon.min.css')}}">
+        <!-- Flaticon CSS-->
+        <link rel="stylesheet" href="{{asset('front/fonts/flaticon/flaticon.css')}}">
+        <!-- Magnific CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/magnific-popup.css')}}">
+        <!-- Meanmenu CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/meanmenu.css')}}">
+        <!-- Nice Select CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/nice-select.css')}}">
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}">
+        <!-- Title CSS -->
+        <title>Jovie - Job Board & Portal HTML Template</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="{{asset('front/img/favicon.png')}}">  
+        <style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
+    </head>
+
+    <body>
+        <!-- Navbar Area Start -->
+        <div class="navbar-area">
+            <!-- Menu For Mobile Device -->
+            <div class="mobile-nav">
+                <a href="index.html" class="logo">
+                    <img src="{{asset('front/img/logo.png')}}" alt="logo">
+                </a>
+            </div>
+        
+            <!-- Menu For Desktop Device -->
+            <div class="main-nav">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="{{asset('front/img/logo.png')}}" alt="logo">
+                        </a>
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav m-auto">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Find Job</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Blog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Contact Us</a>
+                                </li>
+                            </ul>
+                            <div class="other-option">
+                                <div @if(Auth::user()!=null && Auth::user()->role=='employee') style="display:none" @endif>
+                                    <a href="register-user" class="signup-btn">Sign Up</a>
+                                    <a href="{{url('user-login')}}" class="signin-btn">Sign In</a>
+                                </div>
+                                <!--<a href="#">@if(Auth::user()!=null && Auth::user()->role=='employee') {{ Auth::user()->name }} @endif</a>-->
+                                <div class="dropdown">
+                                    <!--<span>Mouse over me</span>-->
+                                    <a href="#">@if(Auth::user()!=null && Auth::user()->role=='employee') {{ Auth::user()->name }} @endif</a>
+                                    <div class="dropdown-content">
+                                        <!--<p>Hello World!</p>-->
+                                        <form class="dropdown-content" method="POST" action="{{ route('logout') }}">
+                                            @csrf
+
+                                            <center>
+                                            <a href="javascript:void(0)"
+                                                onclick="event.preventDefault();
+                                                this.closest('form').submit();">Logout</a></center>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar Area End -->
+
+        <!-- modal -->
+        
+    <div class="modal fade" id="registerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Register <button class="btn btn-danger" data-dismiss="modal" style="float:right">X</button></h3>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ url('submit-register') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label>User Type</label>
+                            <select class="form-control" name="type" required>
+                                <option value="">--SELECT--</option>
+                                <option value="employer">Employer</option>
+                                <option value="employee">Employee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" name="addr" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" class="form-control" name="state" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Aadhar Number</label>
+                            <input type="text" class="form-control" name="aadhar" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Picture</label>
+                            <input type="file" class="form-control" name="profile_pic" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Aadhar Image</label>
+                            <input type="file" class="form-control" name="aadhar_img" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Account Holder Name</label>
+                            <input type="text" class="form-control" name="acc_holder" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Account No</label>
+                            <input type="text" class="form-control" name="account_no" required>
+                        </div>
+                        <div class="form-group">
+                            <label>IFSC</label>
+                            <input type="text" class="form-control" name="ifsc" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Register">
+                        </div>
+                    </form>
+                </div>
+                <!-- <div class="modal-footer"></div> -->
+            </div>
+        </div>
+    </div>
+        <!-- modal end -->
+
+        <!-- Banner Section Start -->
+        <div class="banner-style-three">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="banner-text">
+                            <h1>Find Top IT Jobs For Developers</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <div class="theme-btn">
+                                <a href="#" class="default-btn active">Upload your CV</a>
+                                <a href="contact.html" class="default-btn">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Banner Section End -->
+
+        <!-- Find Section Start -->
+        <div class="find-section pb-100">
+            <div class="container">
+                <form class="find-form">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Job Title or Keyword">
+                                <i class="bx bx-search-alt"></i>
+                            </div>
+                        </div>
+    
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Location">
+                                <i class="bx bx-location-plus"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <select class="category">
+                                <option data-display="Category">Category</option>
+                                <option value="1">Web Development</option>
+                                <option value="2">Graphics Design</option>
+                                <option value="4">Data Entry</option>
+                                <option value="5">Visual Editor</option>
+                                <option value="6">Office Assistant</option>
+                            </select>
+                        </div>
+    
+                        <div class="col-lg-3">
+                            <button type="submit" class="find-btn">
+                                Find A Job
+                                <i class='bx bx-search'></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Find Section End -->
+
+        <!-- Job Category Section Start -->
+        <div class="category-style-two pb-70"> 
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Popular Jobs Category</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-wrench-and-screwdriver-in-cross"></i>
+                                <h3>Construction</h3>
+                                <p>6 new Job</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-accounting"></i>
+                                <h3>Finance</h3>
+                                <p>8 new Job</p>
+                            </div>
+                        </a>                  
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-heart"></i>
+                                <h3>Healthcare</h3>
+                                <p>9 new Job</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-computer-1"></i>
+                                <h3>Graphic Design</h3>
+                                <p>6 new Job</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-research"></i>
+                                <h3>Banking Jobs</h3>
+                                <p>5 new Job</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-worker"></i>
+                                <h3>Automotive</h3>
+                                <p>12 new Job</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-graduation-cap"></i>
+                                <h3>Education</h3>
+                                <p>15 new Job</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-item">
+                                <i class="flaticon-computer"></i>
+                                <h3>Data Analysis</h3>
+                                <p>5 new Job</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Job Category Section End -->
+
+        <!-- Why Choose Section Start -->
+        <section class="why-choose">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-7 p-0">
+                        <div class="why-choose-text pt-100 pb-70">
+                            <div class="section-title text-center">
+                                <h2>Why You Choose Jovie?</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolorei.</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="media">
+                                        <i class="flaticon-group align-self-center mr-3"></i>
+                                        <div class="media-body">
+                                            <h5 class="mt-0">Best Talented People</h5>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="media">
+                                        <i class="flaticon-research align-self-center mr-3"></i>
+                                        <div class="media-body">
+                                            <h5 class="mt-0">Easy To Find Canditate</h5>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="media">
+                                        <i class="flaticon-discussion align-self-center mr-3"></i>
+                                        <div class="media-body">
+                                            <h5 class="mt-0">Easy To Communicate</h5>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="media">
+                                        <i class="flaticon-recruitment align-self-center mr-3"></i>
+                                        <div class="media-body">
+                                            <h5 class="mt-0">Global Recruitment Option</h5>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row counter-area">
+                                <div class="col-md-3 col-6">
+                                        <div class="counter-text">
+                                        <h2><span>127</span></h2>
+                                        <p>Job Posted</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-6">
+                                    <div class="counter-text">
+                                        <h2><span>137</span></h2>
+                                        <p>Job Filed</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-6">
+                                    <div class="counter-text">
+                                        <h2><span>180</span></h2>
+                                        <p>Company</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-6">
+                                    <div class="counter-text">
+                                        <h2><span>144</span></h2>
+                                        <p>Members</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 p-0">
+                        <div class="why-choose-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Why Choose Section End -->
+        
+        <!--== Start Work Process Area Wrapper ==-->
+        <section class="work-process-area">
+            <div class="container" data-aos="fade-down">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title text-center">
+                            <h2>How It Work?</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
+                        </div>                    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="working-process-content-wrap">
+                            <div class="working-col">
+                                <!--== Start Work Process ==-->
+                                <div class="working-process-item">
+                                    <div class="icon-box">
+                                        <div class="inner">
+                                            <img class="icon-img" src="assets/img/icons/w1.png" alt="Image-HasTech">
+                                            <img class="icon-hover" src="assets/img/icons/w1-hover.png" alt="Image-HasTech">
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">Create an Account</h4>
+                                        <p class="desc">It is long established fact reader distracted readable content</p>
+                                    </div>
+                                    <div class="shape-arrow-icon">
+                                        <img class="shape-icon" src="assets/img/icons/right-arrow.png" alt="Image-HasTech">
+                                        <img class="shape-icon-hover" src="assets/img/icons/right-arrow2.png" alt="Image-HasTech">
+                                    </div>
+                                </div>
+                                <!--== End Work Process ==-->
+                            </div>
+                            <div class="working-col">
+                                <!--== Start Work Process ==-->
+                                <div class="working-process-item">
+                                    <div class="icon-box">
+                                        <div class="inner">
+                                            <img class="icon-img" src="assets/img/icons/w2.png" alt="Image-HasTech">
+                                            <img class="icon-hover" src="assets/img/icons/w2-hover.png" alt="Image-HasTech">
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">CV/Resume</h4>
+                                        <p class="desc">It is long established fact reader distracted readable content</p>
+                                    </div>
+                                    <div class="shape-arrow-icon">
+                                        <img class="shape-icon" src="assets/img/icons/right-arrow.png" alt="Image-HasTech">
+                                        <img class="shape-icon-hover" src="assets/img/icons/right-arrow2.png" alt="Image-HasTech">
+                                    </div>
+                                </div>
+                                <!--== End Work Process ==-->
+                            </div>
+                            <div class="working-col">
+                                <!--== Start Work Process ==-->
+                                <div class="working-process-item">
+                                    <div class="icon-box">
+                                        <div class="inner">
+                                            <img class="icon-img" src="assets/img/icons/w3.png" alt="Image-HasTech">
+                                            <img class="icon-hover" src="assets/img/icons/w3-hover.png" alt="Image-HasTech">
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">Find Your Job</h4>
+                                        <p class="desc">It is long established fact reader distracted readable content</p>
+                                    </div>
+                                    <div class="shape-arrow-icon">
+                                        <img class="shape-icon" src="assets/img/icons/right-arrow.png" alt="Image-HasTech">
+                                        <img class="shape-icon-hover" src="assets/img/icons/right-arrow2.png" alt="Image-HasTech">
+                                    </div>
+                                </div>
+                                <!--== End Work Process ==-->
+                            </div>
+                            <div class="working-col">
+                            <!--== Start Work Process ==-->
+                                <div class="working-process-item">
+                                    <div class="icon-box">
+                                        <div class="inner">
+                                            <img class="icon-img" src="assets/img/icons/w4.png" alt="Image-HasTech">
+                                            <img class="icon-hover" src="assets/img/icons/w4-hover.png" alt="Image-HasTech">
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">Save & Apply</h4>
+                                        <p class="desc">It is long established fact reader distracted readable content</p>
+                                    </div>
+                                    <div class="shape-arrow-icon d-none">
+                                        <img class="shape-icon" src="assets/img/icons/right-arrow.png" alt="Image-HasTech">
+                                        <img class="shape-icon-hover" src="assets/img/icons/right-arrow2.png" alt="Image-HasTech">
+                                    </div>
+                                </div>
+                                <!--== End Work Process ==-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Work Process Area Wrapper ==-->
+
+        <!-- Job Section End -->   
+        <section class="job-style-two pt-100 pb-70">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Jobs You May Be Interested In</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="job-card-two">
+                            <div class="row align-items-center">
+                                <div class="col-md-1">
+                                    <div class="company-logo">
+                                        <a href="job-details.html">
+                                            <img src="assets/img/company-logo/1.png" alt="logo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="job-info">
+                                        <h3>
+                                            <a href="job-details.html">Web Designer, Graphic Designer, UI/UX Designer </a>
+                                        </h3>
+                                        <ul>                                          
+                                            <li>
+                                                <i class='bx bx-briefcase' ></i>
+                                                Graphics Designer
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-briefcase' ></i>
+                                                $35000-$38000
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-location-plus'></i>
+                                                Wellesley Rd, London
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-stopwatch' ></i>
+                                                9 days ago
+                                            </li>
+                                        </ul>
+
+                                        <span>Full Time</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="theme-btn text-end">
+                                        <a href="job-details.html" class="default-btn">
+                                            Browse Job
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="job-card-two">
+                            <div class="row align-items-center">
+                                <div class="col-md-1">
+                                    <div class="company-logo">
+                                        <a href="job-details.html">     
+                                            <img src="assets/img/company-logo/1.png" alt="logo">
+                                        </a> 
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="job-info">
+                                        <h3>
+                                            <a href="job-details.html">Website Developer & Software Developer</a>
+                                        </h3>
+                                        <ul>                                          
+                                            <li>
+                                                <i class='bx bx-briefcase' ></i>
+                                                Web Developer
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-briefcase' ></i>
+                                                $3000-$8000
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-location-plus'></i>
+                                                Garden Road, UK
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-stopwatch' ></i>
+                                                5 days ago
+                                            </li>
+                                        </ul>
+
+                                        <span>Full Time</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="theme-btn text-end">
+                                        <a href="job-details.html" class="default-btn">
+                                            Browse Job
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="job-card-two">
+                            <div class="row align-items-center">
+                                <div class="col-md-1">
+                                    <div class="company-logo">
+                                        <a href="job-details.html">
+                                            <img src="assets/img/company-logo/1.png" alt="logo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="job-info">
+                                        <h3>
+                                            <a href="job-details.html">Application Developer & Web Designer</a>
+                                        </h3>
+                                        <ul>                                          
+                                            <li>
+                                                <i class='bx bx-briefcase'></i>
+                                                App Developer
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-briefcase'></i>
+                                                $3000-$4000
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-location-plus'></i>
+                                                State City, USA
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-stopwatch' ></i>
+                                                8 days ago
+                                            </li>
+                                        </ul>
+
+                                        <span>Part-Time</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="theme-btn text-end">
+                                        <a href="job-details.html" class="default-btn">
+                                            Browse Job
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="job-card-two">
+                            <div class="row align-items-center">
+                                <div class="col-md-1">
+                                    <div class="company-logo">
+                                        <a href="job-details.html">
+                                            <img src="assets/img/company-logo/1.png" alt="logo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="job-info">
+                                        <h3>
+                                            <a href="job-details.html">Frontend & Backend Developer</a>
+                                        </h3>
+                                        <ul>                                          
+                                            <li>
+                                                <i class='bx bx-briefcase' ></i>
+                                                Web Developer
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-briefcase' ></i>
+                                                $5000-$8000
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-location-plus'></i>
+                                                Drive Post NY 676
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-stopwatch' ></i>
+                                                1 days ago
+                                            </li>
+                                        </ul>
+
+                                        <span>Full Time</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="theme-btn text-end">
+                                        <a href="job-details.html" class="default-btn">
+                                            Browse Job
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Job Section End -->
+
+        <!-- Testimonial Section Start -->
+        <div class="testimonial-style-two testimonial-style-three pt-100 pb-100">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>What Client’s Say About Us</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p>
+                </div>
+
+                <div class="row">
+                    <div class="testimonial-slider-two owl-carousel owl-theme">
+                        <div class="testimonial-items">
+                            <div class="testimonial-text">
+                                <i class='flaticon-left-quotes-sign'></i>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do mod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</p>
+                            </div>
+
+                            <div class="testimonial-info-text">
+                                <img src="assets/img/client-1.png" alt="client image">
+                                <h3>Alisa Meair</h3>
+                                <p>CEO of  Company</p>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-items">
+                            <div class="testimonial-text">
+                                <i class='flaticon-left-quotes-sign'></i>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do mod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</p>
+                            </div>
+
+                            <div class="testimonial-info-text">
+                                <img src="assets/img/client-2.png" alt="client image">
+                                <h3>Adam Smith</h3>
+                                <p>Web Developer</p>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-items">
+                            <div class="testimonial-text">
+                                <i class='flaticon-left-quotes-sign'></i>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do mod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</p>
+                            </div>
+
+                            <div class="testimonial-info-text">
+                                <img src="assets/img/client-1.png" alt="client image">
+                                <h3>John Doe</h3>
+                                <p>Graphics Designer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial Section End --> 
+
+        <!-- Subscribe Section Start -->
+        <section class="subscribe-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="section-title">
+                            <h2>Get New Job Notifications</h2>
+                            <p>Subscribe & get all related jobs notification</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <form class="newsletter-form" data-toggle="validator">
+                            <input type="email" class="form-control" placeholder="Enter your email" name="EMAIL" required autocomplete="off">
+    
+                            <button class="default-btn sub-btn" type="submit">
+                                Subscribe
+                            </button>
+    
+                            <div id="validator-newsletter" class="form-result"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Subscribe Section End -->
+
+        <!-- Footer Section Start -->
+		<footer class="footer-area pt-100 pb-70">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-sm-6">
+						<div class="footer-widget">
+							<div class="footer-logo">
+								<a href="index.html">
+									<img src="{{asset('front/img/logo.png')}}" alt="logo">
+								</a>
+							</div>
+
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore et dolore magna. Sed eiusmod tempor incididunt ut.</p>
+
+							<div class="footer-social">
+								<a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
+								<a href="#" target="_blank"><i class='bx bxl-twitter'></i></a>
+								<a href="#" target="_blank"><i class='bx bxl-pinterest-alt'></i></a>
+								<a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-sm-6">
+						<div class="footer-widget pl-60">
+							<h3>For Candidate</h3>
+							<ul>
+								<li>
+									<a href="job-grid.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Browse Jobs
+									</a>
+								</li>
+								<li>
+									<a href="account.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Account
+									</a>
+								</li>
+								<li>
+									<a href="catagories.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Browse Categories
+									</a>
+								</li>
+								<li>
+									<a href="resume.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Resume
+									</a>
+								</li>
+								<li>
+									<a href="job-list.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Job List
+									</a>
+								</li>
+								<li>
+									<a href="sign-up.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Sign Up
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-sm-6">
+						<div class="footer-widget pl-60">
+							<h3>Quick Links</h3>
+							<ul>
+								<li>
+									<a href="index.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Home
+									</a>
+								</li>
+								<li>
+									<a href="about.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										About
+									</a>
+								</li>
+								<li>
+									<a href="faq.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										FAQ
+									</a>
+								</li>
+								<li>
+									<a href="pricing.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Pricing
+									</a>
+								</li>
+								<li>
+									<a href="privacy.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Privacy
+									</a>
+								</li>
+								<li>
+									<a href="contact.html">
+										<i class='bx bx-chevrons-right bx-tada'></i>
+										Contact
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-sm-6">
+						<div class="footer-widget footer-info">
+							<h3>Information</h3>
+							<ul>
+								<li>
+									<span>
+										<i class='bx bxs-phone'></i>
+										Phone:
+									</span>
+									<a href="tel:882569756">
+										+101 984 754
+									</a>
+								</li>
+
+								<li>
+									<span>
+										<i class='bx bxs-envelope'></i>
+										Email:
+									</span>
+									<a href="mailto:info@jovie.com">
+										info@jovie.com
+									</a>
+								</li>
+
+								<li>
+									<span>
+										<i class='bx bx-location-plus'></i>
+										Address:
+									</span>
+									123, Denver, USA
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+        <div class="copyright-text text-center">
+            <p>&copy; 2023 All Right Reserved | Manpower Nation | Design & Development by <a href="https://rendement.co/" target="_blank" style="color: #ebd81e;">Rendement Technologies</a></p>
+        </div>
+        <!-- Footer Section End -->
+    
+        <!-- Back To Top Start -->
+		<div class="top-btn">
+			<i class='bx bx-chevrons-up bx-fade-up'></i>
+		</div>
+		<!-- Back To Top End -->
+
+		<!-- jQuery first, then Bootstrap JS -->
+		<script src="{{asset('front/js/jquery.min.js')}}"></script>
+
+        <!-- <script src="{{asset('ui/js/bootstrap.min.js')}}"></script> -->
+
+		<script src="{{asset('front/js/bootstrap.bundle.min.js')}}"></script>
+		<!-- Owl Carousel JS -->
+		<script src="{{asset('front/js/owl.carousel.min.js')}}"></script>
+		<!-- Nice Select JS -->
+		<script src="{{asset('front/js/jquery.nice-select.min.js')}}"></script>
+		<!-- Magnific Popup JS -->
+		<script src="{{asset('front/js/jquery.magnific-popup.min.js')}}"></script>
+		<!-- Subscriber Form JS -->
+		<script src="{{asset('front/js/jquery.ajaxchimp.min.js')}}"></script>
+		<!-- Form Velidation JS -->
+		<script src="{{asset('front/js/form-validator.min.js')}}"></script>
+		<!-- Contact Form -->
+		<script src="{{asset('front/js/contact-form-script.js')}}"></script>
+		<!-- Meanmenu JS -->
+		<script src="{{asset('front/js/meanmenu.js')}}"></script>
+		<!-- Custom JS -->
+		<script src="{{asset('front/js/custom.js')}}"></script>
+  	</body>
+</html>
